@@ -38,7 +38,6 @@ interface TeamMember {
                   class="team-image"
                   [src]="member.image"
                   [alt]="'Foto de ' + member.name"
-                  loading="lazy"
                 />
                 <div class="team-image-overlay"></div>
                 <div class="team-glow"></div>
@@ -140,14 +139,13 @@ interface TeamMember {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         gap: var(--spacing-lg);
-        align-items: start;
+        align-items: stretch;
       }
 
       .team-card {
         position: relative;
         perspective: 1000px;
         opacity: 0;
-        height: 100%;
         display: flex;
         animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
       }
@@ -160,9 +158,10 @@ interface TeamMember {
         padding: var(--spacing-lg);
         transition: all var(--transition-slow);
         overflow: hidden;
-        height: 100%;
         display: flex;
         flex-direction: column;
+        flex: 1;
+        min-height: 280px;
       }
 
       .team-card-inner::before {
@@ -199,10 +198,12 @@ interface TeamMember {
         position: relative;
         width: 100%;
         aspect-ratio: 1;
+        min-height: 180px;
         border-radius: var(--border-radius-lg);
         overflow: hidden;
         margin-bottom: var(--spacing-md);
         flex-shrink: 0;
+        background: rgba(255, 255, 255, 0.03);
       }
 
       .team-image {
@@ -262,6 +263,10 @@ interface TeamMember {
         margin-bottom: var(--spacing-xs);
         line-height: 1.3;
         letter-spacing: -0.01em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
       }
 
       .team-role {
@@ -333,6 +338,11 @@ interface TeamMember {
 
         .team-card-inner {
           padding: var(--spacing-md);
+          min-height: 260px;
+        }
+
+        .team-image-wrapper {
+          min-height: 150px;
         }
 
         .team-name {
@@ -364,10 +374,12 @@ interface TeamMember {
 
         .team-card-inner {
           padding: var(--spacing-sm);
+          min-height: 240px;
         }
 
         .team-image-wrapper {
           margin-bottom: var(--spacing-sm);
+          min-height: 130px;
         }
       }
 
@@ -378,17 +390,23 @@ interface TeamMember {
 
         .team-grid {
           grid-template-columns: 1fr;
-          max-width: 260px;
+          max-width: 280px;
           margin: 0 auto;
           gap: var(--spacing-lg);
         }
 
         .team-card-inner {
           padding: var(--spacing-md);
+          min-height: 320px;
+        }
+
+        .team-image-wrapper {
+          min-height: 220px;
         }
 
         .team-name {
           font-size: var(--font-size-base);
+          white-space: normal;
         }
 
         .team-role {
