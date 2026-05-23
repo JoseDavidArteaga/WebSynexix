@@ -137,7 +137,7 @@ interface TeamMember {
         position: relative;
         z-index: 2;
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(5, minmax(0, 1fr));
         gap: var(--spacing-lg);
         align-items: stretch;
       }
@@ -148,6 +148,7 @@ interface TeamMember {
         opacity: 0;
         display: flex;
         height: 100%;
+        min-width: 0;
         animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
       }
 
@@ -256,6 +257,8 @@ interface TeamMember {
         position: relative;
         z-index: 2;
         text-align: center;
+        min-width: 0;
+        width: 100%;
       }
 
       .team-name {
@@ -307,7 +310,7 @@ interface TeamMember {
       /* Responsive */
       @media (max-width: 1200px) {
         .team-grid {
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
         .team-image-wrapper {
@@ -324,7 +327,7 @@ interface TeamMember {
 
       @media (max-width: 992px) {
         .team-grid {
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(3, minmax(0, 1fr));
           gap: var(--spacing-md);
         }
 
@@ -344,7 +347,7 @@ interface TeamMember {
         }
 
         .team-grid {
-          grid-template-columns: repeat(2, 1fr);
+          grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: var(--spacing-md);
         }
 
@@ -380,7 +383,7 @@ interface TeamMember {
 
       @media (max-width: 576px) {
         .team-grid {
-          grid-template-columns: repeat(2, 1fr);
+          grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: var(--spacing-sm);
         }
 
