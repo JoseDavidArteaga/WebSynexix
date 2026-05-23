@@ -212,22 +212,27 @@ import { CommonModule } from '@angular/common';
 
         .nav-links {
           position: absolute;
-          top: 70px;
+          top: 60px;
           left: 0;
           right: 0;
           background: rgba(19, 28, 56, 0.98);
           flex-direction: column;
-          gap: var(--spacing-lg);
-          padding: var(--spacing-xl);
+          gap: 0;
+          padding: 0 var(--spacing-lg);
           border-bottom: 1px solid rgba(235, 197, 38, 0.1);
           max-height: 0;
           overflow: hidden;
-          transition: max-height var(--transition-base);
+          opacity: 0;
+          visibility: hidden;
+          transition: max-height var(--transition-base), opacity var(--transition-base), padding var(--transition-base);
         }
 
         .nav-links.active {
           max-height: 500px;
           padding: var(--spacing-xl) var(--spacing-lg);
+          opacity: 1;
+          visibility: visible;
+          gap: var(--spacing-lg);
         }
 
         .nav-links a {
@@ -235,14 +240,29 @@ import { CommonModule } from '@angular/common';
           width: 100%;
           text-align: center;
           padding: var(--spacing-sm) 0;
+          opacity: 0;
+          transform: translateY(-10px);
+          transition: opacity 0.3s ease, transform 0.3s ease;
         }
+
+        .nav-links.active a {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .nav-links li:nth-child(1) a { transition-delay: 0.05s; }
+        .nav-links li:nth-child(2) a { transition-delay: 0.1s; }
+        .nav-links li:nth-child(3) a { transition-delay: 0.15s; }
+        .nav-links li:nth-child(4) a { transition-delay: 0.2s; }
+        .nav-links li:nth-child(5) a { transition-delay: 0.25s; }
+        .nav-links li:nth-child(6) a { transition-delay: 0.3s; }
 
         .navbar-cta {
           display: none;
         }
 
         .navbar-container {
-          padding: var(--spacing-xs) 0;
+          padding: var(--spacing-xs) var(--spacing-md);
           min-height: 60px;
         }
 
@@ -252,6 +272,14 @@ import { CommonModule } from '@angular/common';
       }
 
       @media (max-width: 480px) {
+        .navbar-container {
+          padding: var(--spacing-xs) var(--spacing-md);
+        }
+
+        .nav-links {
+          top: 55px;
+        }
+
         .nav-links.active {
           padding: var(--spacing-lg);
         }
