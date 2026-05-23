@@ -5,13 +5,7 @@ interface TeamMember {
   id: number;
   name: string;
   role: string;
-  bio: string;
   image: string;
-  socials: {
-    icon: string;
-    url: string;
-    label: string;
-  }[];
 }
 
 @Component({
@@ -20,46 +14,43 @@ interface TeamMember {
   imports: [CommonModule],
   template: `
     <section id="team" class="team-section section">
+      <div class="team-mesh-bg"></div>
+
       <div class="container">
         <div class="section-title" data-animate="fade-in-up">
+          <span class="section-eyebrow">Quiénes somos</span>
           <h2>Nuestro Equipo</h2>
           <p>
-            Profesionales apasionados e innovadores trabajando juntos para
-            transformar la tecnología
+            Las personas detrás de la innovación. Profesionales comprometidos
+            con el futuro tecnológico.
           </p>
         </div>
 
-        <div class="grid grid-4">
+        <div class="team-grid">
           <div
             *ngFor="let member of teamMembers; let i = index"
             class="team-card"
             [attr.data-animate]="'fade-in-up'"
-            [style.animation-delay.ms]="(i + 1) * 100"
+            [style.animation-delay.ms]="(i + 1) * 120"
           >
-            <div class="team-image-wrapper">
-              <div
-                class="team-image"
-                [style.background-image]="'url(' + member.image + ')'"
-              ></div>
-              <div class="team-overlay">
-                <p class="team-bio">{{ member.bio }}</p>
-                <div class="team-socials">
-                  <a
-                    *ngFor="let social of member.socials"
-                    [href]="social.url"
-                    [title]="social.label"
-                    target="_blank"
-                    rel="noopener"
-                    class="social-link"
-                    [innerHTML]="social.icon"
-                  ></a>
-                </div>
+            <div class="team-card-inner">
+              <div class="team-image-wrapper">
+                <img
+                  class="team-image"
+                  [src]="member.image"
+                  [alt]="'Foto de ' + member.name"
+                  loading="lazy"
+                />
+                <div class="team-image-overlay"></div>
+                <div class="team-glow"></div>
               </div>
-            </div>
 
-            <div class="team-info">
-              <h3>{{ member.name }}</h3>
-              <p class="team-role">{{ member.role }}</p>
+              <div class="team-info">
+                <h3 class="team-name">{{ member.name }}</h3>
+                <span class="team-role">{{ member.role }}</span>
+              </div>
+
+              <div class="team-border"></div>
             </div>
           </div>
         </div>
@@ -69,136 +60,288 @@ interface TeamMember {
   styles: [
     `
       .team-section {
-        background: var(--color-bg-light);
+        position: relative;
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        padding: 40px 0 40px;
+        overflow: hidden;
+        background: var(--color-bg-dark);
+        clip-path: polygon(0 2%, 100% 0, 100% 100%, 0 100%);
       }
 
-      .grid-4 {
+      .team-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(235, 197, 38, 0.25),
+          transparent
+        );
+        z-index: 5;
+      }
+
+      .team-mesh-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(at 30% 20%, rgba(235, 197, 38, 0.05) 0px, transparent 50%),
+          radial-gradient(at 70% 80%, rgba(113, 113, 174, 0.06) 0px, transparent 50%),
+          var(--color-bg-dark);
+        z-index: 0;
+      }
+
+      .team-section .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        //margin-top: auto;
+        //margin-bottom: auto;
+      }
+
+      .section-title {
+        position: relative;
+        z-index: 2;
+        margin-bottom: var(--spacing-xl);
+        text-align: center;
+      }
+
+      .section-title h2 {
+        color: var(--color-text-light);
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .section-title p {
+        font-size: var(--font-size-base);
+        color: var(--color-text-secondary);
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .section-eyebrow {
+        display: inline-block;
+        font-family: var(--font-display);
+        font-size: var(--font-size-xs);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--color-primary-light);
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .team-grid {
+        position: relative;
+        z-index: 2;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         gap: var(--spacing-lg);
+        align-items: start;
       }
 
       .team-card {
+        position: relative;
+        perspective: 1000px;
+        opacity: 0;
+        height: 100%;
+        display: flex;
+      }
+
+      .team-card.fade-in-up {
+        animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+
+      .team-card-inner {
+        position: relative;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: var(--border-radius-xl);
+        padding: var(--spacing-lg);
+        transition: all var(--transition-slow);
+        overflow: hidden;
+        height: 100%;
         display: flex;
         flex-direction: column;
-        cursor: pointer;
-        animation: fadeInUp 0.8s ease-out forwards;
+      }
+
+      .team-card-inner::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1.5px;
+        background: linear-gradient(
+          160deg,
+          rgba(235, 197, 38, 0.4),
+          rgba(113, 113, 174, 0.2),
+          transparent 70%
+        );
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
         opacity: 0;
+        transition: opacity var(--transition-slow);
+      }
+
+      .team-card:hover .team-card-inner {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-glow-lg), 0 20px 40px rgba(0, 0, 0, 0.25);
+        border-color: rgba(235, 197, 38, 0.1);
+      }
+
+      .team-card:hover .team-card-inner::before {
+        opacity: 0.8;
       }
 
       .team-image-wrapper {
         position: relative;
         width: 100%;
         aspect-ratio: 1;
-        overflow: hidden;
         border-radius: var(--border-radius-lg);
+        overflow: hidden;
         margin-bottom: var(--spacing-md);
-        box-shadow: var(--shadow-md);
+        flex-shrink: 0;
       }
 
       .team-image {
         width: 100%;
         height: 100%;
-        background-size: cover;
-        background-position: center;
-        transition: transform 0.3s ease-out;
+        object-fit: cover;
+        object-position: top center;
+        transition: transform var(--transition-slow);
+        display: block;
       }
 
       .team-card:hover .team-image {
-        transform: scale(1.1);
+        transform: scale(1.08);
       }
 
-      .team-overlay {
+      .team-image-overlay {
         position: absolute;
         inset: 0;
         background: linear-gradient(
-          135deg,
-          rgba(12, 15, 38, 0.95) 0%,
-          rgba(113, 113, 174, 0.9) 100%
+          180deg,
+          transparent 50%,
+          rgba(19, 28, 56, 0.7) 100%
         );
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: var(--spacing-lg);
-        opacity: 0;
-        transition: opacity 0.3s ease-out;
-        gap: var(--spacing-md);
+        pointer-events: none;
+        z-index: 1;
       }
 
-      .team-card:hover .team-overlay {
+      .team-glow {
+        position: absolute;
+        inset: -20px;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(235, 197, 38, 0.1),
+          transparent 70%
+        );
+        opacity: 0;
+        transition: opacity var(--transition-slow);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .team-card:hover .team-glow {
         opacity: 1;
       }
 
-      .team-bio {
-        color: var(--color-text-light);
-        text-align: center;
-        font-size: var(--font-size-sm);
-        line-height: 1.5;
-      }
-
-      .team-socials {
-        display: flex;
-        gap: var(--spacing-md);
-        justify-content: center;
-      }
-
-      .social-link {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background: rgba(235, 197, 38, 0.1);
-        border: 1px solid var(--color-primary-light);
-        border-radius: 50%;
-        color: var(--color-primary-light);
-        transition: all 0.3s ease;
-        cursor: pointer;
-      }
-
-      .social-link:hover {
-        background: var(--color-primary-light);
-        color: var(--color-bg-dark);
-        transform: translateY(-2px);
-      }
-
-      .social-link svg {
-        width: 20px;
-        height: 20px;
-      }
-
       .team-info {
+        position: relative;
+        z-index: 2;
         text-align: center;
       }
 
-      .team-info h3 {
+      .team-name {
+        font-family: var(--font-display);
+        font-size: var(--font-size-base);
+        font-weight: 600;
+        color: var(--color-text-light);
         margin-bottom: var(--spacing-xs);
+        line-height: 1.3;
+        letter-spacing: -0.01em;
       }
 
       .team-role {
+        font-family: var(--font-display);
+        font-size: var(--font-size-xs);
+        font-weight: 400;
         color: var(--color-primary-light);
-        font-size: var(--font-size-sm);
-        font-weight: 600;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
       }
 
+      .team-border {
+        position: absolute;
+        bottom: 0;
+        left: 20%;
+        right: 20%;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--color-primary-light),
+          transparent
+        );
+        opacity: 0.2;
+        transition: opacity var(--transition-slow), left var(--transition-slow), right var(--transition-slow);
+      }
+
+      .team-card:hover .team-border {
+        opacity: 0.6;
+        left: 10%;
+        right: 10%;
+      }
+
+      /* Responsive */
       @media (max-width: 1200px) {
-        .grid-4 {
-          grid-template-columns: repeat(2, 1fr);
+        .team-grid {
+          grid-template-columns: repeat(3, 1fr);
         }
       }
 
       @media (max-width: 1024px) {
-        .grid-4 {
-          grid-template-columns: repeat(2, 1fr);
+        .team-section {
+          min-height: auto;
+          padding: 100px 0 60px;
         }
       }
 
       @media (max-width: 768px) {
-        .grid-4 {
+        .team-section {
+          min-height: auto;
+          padding: 100px 0 60px;
+        }
+
+        .team-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: var(--spacing-md);
+        }
+
+        .team-card-inner {
+          padding: var(--spacing-md);
+        }
+
+        .team-number {
+          font-size: 2rem;
+        }
+
+        .section-title {
+          margin-bottom: var(--spacing-lg);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .team-grid {
           grid-template-columns: 1fr;
+          max-width: 280px;
+          margin: 0 auto;
         }
       }
     `,
@@ -208,227 +351,33 @@ export class TeamComponent {
   teamMembers: TeamMember[] = [
     {
       id: 1,
-      name: 'Carlos Mendoza',
-      role: 'CEO & Fundador',
-      bio: 'Visionario tecnológico con 15+ años liderando innovación en empresas Fortune 500.',
-      image:
-        'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%25" style="stop-color:%23ebc526;stop-opacity:1" /><stop offset="100%25" style="stop-color:%237171ae;stop-opacity:1" /></linearGradient></defs><rect width="400" height="400" fill="url(%23grad1)"/><circle cx="200" cy="140" r="60" fill="rgba(255,255,255,0.3)"/><rect x="100" y="220" width="200" height="160" rx="30" fill="rgba(255,255,255,0.2)"/></svg>',
-      socials: [
-        {
-          icon: this.getLinkedInIcon(),
-          url: 'https://linkedin.com',
-          label: 'LinkedIn',
-        },
-        {
-          icon: this.getTwitterIcon(),
-          url: 'https://twitter.com',
-          label: 'Twitter',
-        },
-        {
-          icon: this.getGitHubIcon(),
-          url: 'https://github.com',
-          label: 'GitHub',
-        },
-      ],
+      name: 'David Fernandez',
+      role: 'Web Master',
+      image: 'assets/foto DAVID FERNANDEZ.png',
     },
     {
       id: 2,
-      name: 'Ana García',
-      role: 'CTO',
-      bio: 'Experta en arquitectura de sistemas y liderazgo técnico con especialización en cloud.',
-      image:
-        'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%25" style="stop-color:%238a8b8a;stop-opacity:1" /><stop offset="100%25" style="stop-color:%239f9455;stop-opacity:1" /></linearGradient></defs><rect width="400" height="400" fill="url(%23grad2)"/><circle cx="200" cy="140" r="60" fill="rgba(255,255,255,0.3)"/><rect x="100" y="220" width="200" height="160" rx="30" fill="rgba(255,255,255,0.2)"/></svg>',
-      socials: [
-        {
-          icon: this.getLinkedInIcon(),
-          url: 'https://linkedin.com',
-          label: 'LinkedIn',
-        },
-        {
-          icon: this.getTwitterIcon(),
-          url: 'https://twitter.com',
-          label: 'Twitter',
-        },
-        {
-          icon: this.getGitHubIcon(),
-          url: 'https://github.com',
-          label: 'GitHub',
-        },
-      ],
+      name: 'Jhonny Richard Fuertes Patiño',
+      role: 'Líder del Proyecto',
+      image: 'assets/foto FUERTES PATIÑO JHONNY RICHARD.png',
     },
     {
       id: 3,
-      name: 'Roberto Díaz',
-      role: 'Head of Product',
-      bio: 'Estratega de productos innovador con experiencia en startups y empresas de tech.',
-      image:
-        'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%25" style="stop-color:%23131c38;stop-opacity:1" /><stop offset="100%25" style="stop-color:%237171ae;stop-opacity:1" /></linearGradient></defs><rect width="400" height="400" fill="url(%23grad3)"/><circle cx="200" cy="140" r="60" fill="rgba(255,255,255,0.3)"/><rect x="100" y="220" width="200" height="160" rx="30" fill="rgba(255,255,255,0.2)"/></svg>',
-      socials: [
-        {
-          icon: this.getLinkedInIcon(),
-          url: 'https://linkedin.com',
-          label: 'LinkedIn',
-        },
-        {
-          icon: this.getTwitterIcon(),
-          url: 'https://twitter.com',
-          label: 'Twitter',
-        },
-        {
-          icon: this.getGitHubIcon(),
-          url: 'https://github.com',
-          label: 'GitHub',
-        },
-      ],
+      name: 'Anderson Vinasco Giraldo',
+      role: 'Interventor',
+      image: 'assets/foto VINASCO GIRALDO ANDERSON.png',
     },
     {
       id: 4,
-      name: 'María López',
-      role: 'Lead Developer',
-      bio: 'Ingeniera full-stack con pasión por código limpio e innovación tecnológica.',
-      image:
-        'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%25" style="stop-color:%23dcc75d;stop-opacity:1" /><stop offset="100%25" style="stop-color:%238a8b8a;stop-opacity:1" /></linearGradient></defs><rect width="400" height="400" fill="url(%23grad4)"/><circle cx="200" cy="140" r="60" fill="rgba(255,255,255,0.3)"/><rect x="100" y="220" width="200" height="160" rx="30" fill="rgba(255,255,255,0.2)"/></svg>',
-      socials: [
-        {
-          icon: this.getLinkedInIcon(),
-          url: 'https://linkedin.com',
-          label: 'LinkedIn',
-        },
-        {
-          icon: this.getTwitterIcon(),
-          url: 'https://twitter.com',
-          label: 'Twitter',
-        },
-        {
-          icon: this.getGitHubIcon(),
-          url: 'https://github.com',
-          label: 'GitHub',
-        },
-      ],
+      name: 'Braian Rey Castillo',
+      role: 'Secretario',
+      image: 'assets/foto REY CASTILLO BRAIAN.png',
     },
     {
       id: 5,
-      name: 'David Sánchez',
-      role: 'AI Specialist',
-      bio: 'Especialista en machine learning e inteligencia artificial aplicada a negocio.',
-      image:
-        'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%25" style="stop-color:%23574f1e;stop-opacity:1" /><stop offset="100%25" style="stop-color:%239f9455;stop-opacity:1" /></linearGradient></defs><rect width="400" height="400" fill="url(%23grad5)"/><circle cx="200" cy="140" r="60" fill="rgba(255,255,255,0.3)"/><rect x="100" y="220" width="200" height="160" rx="30" fill="rgba(255,255,255,0.2)"/></svg>',
-      socials: [
-        {
-          icon: this.getLinkedInIcon(),
-          url: 'https://linkedin.com',
-          label: 'LinkedIn',
-        },
-        {
-          icon: this.getTwitterIcon(),
-          url: 'https://twitter.com',
-          label: 'Twitter',
-        },
-        {
-          icon: this.getGitHubIcon(),
-          url: 'https://github.com',
-          label: 'GitHub',
-        },
-      ],
-    },
-    {
-      id: 6,
-      name: 'Laura Fernández',
-      role: 'UX/UI Designer',
-      bio: 'Diseñadora creativa enfocada en experiencias digitales intuitivas y hermosas.',
-      image:
-        'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="grad6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%25" style="stop-color:%237171ae;stop-opacity:1" /><stop offset="100%25" style="stop-color:%23ebc526;stop-opacity:1" /></linearGradient></defs><rect width="400" height="400" fill="url(%23grad6)"/><circle cx="200" cy="140" r="60" fill="rgba(255,255,255,0.3)"/><rect x="100" y="220" width="200" height="160" rx="30" fill="rgba(255,255,255,0.2)"/></svg>',
-      socials: [
-        {
-          icon: this.getLinkedInIcon(),
-          url: 'https://linkedin.com',
-          label: 'LinkedIn',
-        },
-        {
-          icon: this.getTwitterIcon(),
-          url: 'https://twitter.com',
-          label: 'Twitter',
-        },
-        {
-          icon: this.getGitHubIcon(),
-          url: 'https://github.com',
-          label: 'GitHub',
-        },
-      ],
-    },
-    {
-      id: 7,
-      name: 'Marco Rossi',
-      role: 'DevOps Engineer',
-      bio: 'Experto en infraestructura, automatización y deployment continuo en la nube.',
-      image:
-        'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="grad7" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%25" style="stop-color:%238a8b8a;stop-opacity:1" /><stop offset="100%25" style="stop-color:%23131c38;stop-opacity:1" /></linearGradient></defs><rect width="400" height="400" fill="url(%23grad7)"/><circle cx="200" cy="140" r="60" fill="rgba(255,255,255,0.3)"/><rect x="100" y="220" width="200" height="160" rx="30" fill="rgba(255,255,255,0.2)"/></svg>',
-      socials: [
-        {
-          icon: this.getLinkedInIcon(),
-          url: 'https://linkedin.com',
-          label: 'LinkedIn',
-        },
-        {
-          icon: this.getTwitterIcon(),
-          url: 'https://twitter.com',
-          label: 'Twitter',
-        },
-        {
-          icon: this.getGitHubIcon(),
-          url: 'https://github.com',
-          label: 'GitHub',
-        },
-      ],
-    },
-    {
-      id: 8,
-      name: 'Sofía Martínez',
-      role: 'Business Analyst',
-      bio: 'Analista estratégica que conecta soluciones tecnológicas con objetivos empresariales.',
-      image:
-        'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="grad8" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%25" style="stop-color:%239f9455;stop-opacity:1" /><stop offset="100%25" style="stop-color:%23dcc75d;stop-opacity:1" /></linearGradient></defs><rect width="400" height="400" fill="url(%23grad8)"/><circle cx="200" cy="140" r="60" fill="rgba(255,255,255,0.3)"/><rect x="100" y="220" width="200" height="160" rx="30" fill="rgba(255,255,255,0.2)"/></svg>',
-      socials: [
-        {
-          icon: this.getLinkedInIcon(),
-          url: 'https://linkedin.com',
-          label: 'LinkedIn',
-        },
-        {
-          icon: this.getTwitterIcon(),
-          url: 'https://twitter.com',
-          label: 'Twitter',
-        },
-        {
-          icon: this.getGitHubIcon(),
-          url: 'https://github.com',
-          label: 'GitHub',
-        },
-      ],
+      name: 'Brayan Hernan Meneses Macias',
+      role: 'Moderador',
+      image: 'assets/foto MENESES MACIAS BRAYAN HERNAN.png',
     },
   ];
-
-  private getLinkedInIcon(): string {
-    return `
-      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.731-2.004 1.43-.103.25-.129.599-.129.948v5.427h-3.553s.047-8.789 0-9.701h3.553v1.374c.42-.653 1.173-1.583 2.851-1.583 2.084 0 3.644 1.362 3.644 4.292l-.001 5.618zM5.337 8.855c-1.144 0-1.915-.761-1.915-1.715 0-.956.77-1.715 1.958-1.715 1.187 0 1.914.759 1.938 1.715 0 .954-.751 1.715-1.981 1.715zm1.946 11.597H3.392v-9.701h3.891v9.701zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
-      </svg>
-    `;
-  }
-
-  private getTwitterIcon(): string {
-    return `
-      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-      </svg>
-    `;
-  }
-
-  private getGitHubIcon(): string {
-    return `
-      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-      </svg>
-    `;
-  }
 }

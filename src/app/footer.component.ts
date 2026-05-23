@@ -7,12 +7,18 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <footer class="footer" id="contact">
+      <div class="footer-mesh-bg"></div>
+      <div class="footer-glow"></div>
+
       <div class="footer-content">
         <div class="container">
-          <div class="grid grid-4">
+          <div class="footer-grid">
             <!-- Footer Column 1: Company Info -->
-            <div class="footer-column" data-animate="fade-in-up">
-              <h4>Synexix</h4>
+            <div class="footer-brand" data-animate="fade-in-up">
+              <div class="footer-logo">
+                <span class="logo-icon">◈</span>
+                <span class="logo-text">Synexix</span>
+              </div>
               <p class="footer-description">
                 Transformando empresas a través de soluciones tecnológicas
                 innovadoras y sostenibles.
@@ -80,16 +86,16 @@ import { CommonModule } from '@angular/common';
               <h4>Contacto</h4>
               <div class="contact-info">
                 <p>
-                  <strong>Email:</strong><br />
+                  <span class="contact-label">Email</span>
                   <a href="mailto:hello&#64;synexix.com">hello&#64;synexix.com</a>
                 </p>
                 <p>
-                  <strong>Teléfono:</strong><br />
+                  <span class="contact-label">Teléfono</span>
                   <a href="tel:+34123456789">+57 3216711298</a>
                 </p>
                 <p>
-                  <strong>Ubicación:</strong><br />
-                  Popayán, Colombia
+                  <span class="contact-label">Ubicación</span>
+                  <span>Popayán, Colombia</span>
                 </p>
               </div>
             </div>
@@ -103,41 +109,50 @@ import { CommonModule } from '@angular/common';
         <div class="container">
           <div class="footer-bottom-content">
             <p class="copyright">
-              &copy; 2024 Synexix. Todos los derechos reservados.
+              © 2026 Synexix. Todos los derechos reservados.
             </p>
             <ul class="footer-links">
-              <li><a href="#privacy">Política de Privacidad</a></li>
-              <li><a href="#terms">Términos de Servicio</a></li>
-              <li><a href="#cookies">Política de Cookies</a></li>
+              <li><a href="#privacy">Privacidad</a></li>
+              <li><a href="#terms">Términos</a></li>
+              <li><a href="#cookies">Cookies</a></li>
             </ul>
           </div>
         </div>
       </div>
-
-      <div class="footer-glow"></div>
     </footer>
   `,
   styles: [
     `
       .footer {
-        background: var(--color-bg-dark);
-        color: var(--color-text-light);
         position: relative;
+        color: var(--color-text-light);
         overflow: hidden;
+        background: var(--color-bg-dark);
+      }
+
+      .footer-mesh-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(at 80% 20%, rgba(235, 197, 38, 0.04) 0px, transparent 50%),
+          radial-gradient(at 10% 80%, rgba(113, 113, 174, 0.05) 0px, transparent 50%),
+          var(--color-bg-dark);
+        z-index: 0;
       }
 
       .footer-glow {
         position: absolute;
-        bottom: -100px;
+        bottom: -200px;
         right: -100px;
-        width: 500px;
-        height: 500px;
+        width: 600px;
+        height: 600px;
         background: radial-gradient(
           circle,
-          rgba(113, 113, 174, 0.1) 0%,
+          rgba(113, 113, 174, 0.08) 0%,
           transparent 70%
         );
         pointer-events: none;
+        z-index: 1;
       }
 
       .footer-content {
@@ -146,11 +161,107 @@ import { CommonModule } from '@angular/common';
         padding: var(--spacing-6xl) 0 var(--spacing-3xl);
       }
 
-      .grid-4 {
+      .footer-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
         gap: var(--spacing-4xl);
-        margin-bottom: var(--spacing-4xl);
+      }
+
+      .footer-brand {
+        opacity: 0;
+      }
+
+      .footer-brand.fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+      }
+
+      .footer-logo {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .footer-logo .logo-icon {
+        font-size: 1.5rem;
+        color: var(--color-primary-light);
+        line-height: 1;
+      }
+
+      .footer-logo .logo-text {
+        font-family: var(--font-display);
+        font-size: var(--font-size-2xl);
+        font-weight: 700;
+        background: linear-gradient(
+          135deg,
+          var(--color-primary-light),
+          var(--color-primary-muted),
+          var(--color-accent-purple)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .footer-description {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+        margin-bottom: var(--spacing-xl);
+        max-width: 280px;
+      }
+
+      .social-links {
+        display: flex;
+        gap: var(--spacing-md);
+      }
+
+      .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        background: rgba(235, 197, 38, 0.05);
+        border: 1px solid rgba(235, 197, 38, 0.15);
+        border-radius: 50%;
+        color: var(--color-primary-light);
+        transition: all var(--transition-base);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .social-links a::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--color-primary-light);
+        transform: scale(0);
+        border-radius: 50%;
+        transition: transform var(--transition-bounce);
+      }
+
+      .social-links a:hover {
+        border-color: var(--color-primary-light);
+        transform: translateY(-3px);
+      }
+
+      .social-links a:hover::before {
+        transform: scale(1);
+      }
+
+      .social-links a:hover svg {
+        color: var(--color-bg-dark);
+        position: relative;
+        z-index: 1;
+      }
+
+      .social-links svg {
+        width: 18px;
+        height: 18px;
+        transition: color var(--transition-base);
       }
 
       .footer-column {
@@ -162,50 +273,26 @@ import { CommonModule } from '@angular/common';
       }
 
       .footer-column h4 {
-        font-size: var(--font-size-lg);
-        font-weight: 700;
-        margin-bottom: var(--spacing-lg);
-        color: var(--color-text-light);
-      }
-
-      .footer-column p {
+        font-family: var(--font-display);
         font-size: var(--font-size-sm);
-        line-height: 1.6;
-        color: var(--color-text-secondary);
+        font-weight: 600;
+        margin-bottom: var(--spacing-xl);
+        color: var(--color-text-light);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        position: relative;
+        padding-bottom: var(--spacing-md);
       }
 
-      .footer-description {
-        margin-bottom: var(--spacing-lg);
-      }
-
-      .social-links {
-        display: flex;
-        gap: var(--spacing-md);
-        margin-top: var(--spacing-lg);
-      }
-
-      .social-links a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background: rgba(235, 197, 38, 0.05);
-        border: 1px solid rgba(235, 197, 38, 0.2);
-        border-radius: 50%;
-        color: var(--color-primary-light);
-        transition: all 0.3s ease;
-      }
-
-      .social-links a:hover {
-        background: var(--color-primary-light);
-        color: var(--color-bg-dark);
-        transform: translateY(-2px);
-      }
-
-      .social-links svg {
-        width: 20px;
-        height: 20px;
+      .footer-column h4::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 30px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--color-primary-light), var(--color-accent-purple));
+        border-radius: 1px;
       }
 
       .footer-column ul {
@@ -220,28 +307,51 @@ import { CommonModule } from '@angular/common';
         color: var(--color-text-secondary);
         text-decoration: none;
         font-size: var(--font-size-sm);
-        transition: color 0.3s ease;
+        transition: all var(--transition-base);
+        position: relative;
+        display: inline-block;
+      }
+
+      .footer-column ul a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--color-primary-light);
+        transition: width var(--transition-base);
       }
 
       .footer-column ul a:hover {
         color: var(--color-primary-light);
       }
 
+      .footer-column ul a:hover::after {
+        width: 100%;
+      }
+
       .contact-info p {
         margin-bottom: var(--spacing-lg);
         font-size: var(--font-size-sm);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs);
       }
 
-      .contact-info strong {
+      .contact-label {
+        font-family: var(--font-display);
+        font-size: var(--font-size-xs);
         color: var(--color-primary-light);
-        display: block;
-        margin-bottom: var(--spacing-xs);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
       }
 
-      .contact-info a {
+      .contact-info a,
+      .contact-info span {
         color: var(--color-text-secondary);
         text-decoration: none;
-        transition: color 0.3s ease;
+        transition: color var(--transition-base);
       }
 
       .contact-info a:hover {
@@ -249,20 +359,22 @@ import { CommonModule } from '@angular/common';
       }
 
       .footer-divider {
+        position: relative;
+        z-index: 2;
         height: 1px;
         background: linear-gradient(
           90deg,
           transparent,
-          rgba(235, 197, 38, 0.2),
+          rgba(235, 197, 38, 0.15),
           transparent
         );
-        margin: var(--spacing-3xl) 0;
+        margin: 0;
       }
 
       .footer-bottom {
         position: relative;
         z-index: 2;
-        padding-bottom: var(--spacing-3xl);
+        padding: var(--spacing-xl) 0;
       }
 
       .footer-bottom-content {
@@ -270,12 +382,13 @@ import { CommonModule } from '@angular/common';
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: var(--spacing-2xl);
+        gap: var(--spacing-xl);
       }
 
       .copyright {
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size-xs);
         color: var(--color-text-secondary);
+        letter-spacing: 0.05em;
       }
 
       .footer-links {
@@ -287,22 +400,24 @@ import { CommonModule } from '@angular/common';
       .footer-links a {
         color: var(--color-text-secondary);
         text-decoration: none;
-        font-size: var(--font-size-sm);
-        transition: color 0.3s ease;
+        font-size: var(--font-size-xs);
+        transition: color var(--transition-base);
+        letter-spacing: 0.05em;
       }
 
       .footer-links a:hover {
         color: var(--color-primary-light);
       }
 
-      @media (max-width: 1200px) {
-        .grid-4 {
+      @media (max-width: 1024px) {
+        .footer-grid {
           grid-template-columns: repeat(2, 1fr);
+          gap: var(--spacing-3xl);
         }
       }
 
       @media (max-width: 768px) {
-        .grid-4 {
+        .footer-grid {
           grid-template-columns: 1fr;
           gap: var(--spacing-3xl);
         }

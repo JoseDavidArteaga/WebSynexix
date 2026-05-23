@@ -17,29 +17,41 @@ interface Value {
   imports: [CommonModule],
   template: `
     <section id="policies-values" class="policies-values-section section">
+      <div class="pv-mesh-bg"></div>
+
       <div class="container">
         <!-- Políticas -->
         <div class="subsection" data-animate="fade-in-up">
-          <h2>Políticas</h2>
+          <div class="section-header">
+            <span class="section-eyebrow">Normativa interna</span>
+            <h2>Políticas</h2>
+            <div class="deco-line deco-line-left"></div>
+          </div>
           <div class="policies-grid">
-            <div *ngFor="let policy of policies" class="policy-item">
-              <div class="policy-header">
+            <div *ngFor="let policy of policies; let i = index" class="policy-item" [style.animation-delay.ms]="i * 80">
+              <div class="policy-number">{{ i + 1 | number: '2.0' }}</div>
+              <div class="policy-content">
                 <h3>{{ policy.title }}</h3>
+                <p>{{ policy.description }}</p>
               </div>
-              <p>{{ policy.description }}</p>
             </div>
           </div>
         </div>
 
         <!-- Valores -->
         <div class="subsection" data-animate="fade-in-up">
-          <h2>Valores</h2>
+          <div class="section-header">
+            <span class="section-eyebrow">Lo que nos define</span>
+            <h2>Valores</h2>
+            <div class="deco-line deco-line-left"></div>
+          </div>
           <div class="values-grid">
-            <div *ngFor="let value of values" class="value-item card">
-              <div class="value-header">
+            <div *ngFor="let value of values; let i = index" class="value-item card" [style.animation-delay.ms]="i * 80">
+              <div class="value-content">
                 <h3>{{ value.title }}</h3>
+                <p>{{ value.description }}</p>
               </div>
-              <p>{{ value.description }}</p>
+              <div class="value-accent"></div>
             </div>
           </div>
         </div>
@@ -49,97 +61,210 @@ interface Value {
   styles: [
     `
       .policies-values-section {
-        background: var(--color-bg-dark);
-        padding: var(--spacing-6xl) 0;
+        position: relative;
+        padding: var(--spacing-4xl) 0;
+        overflow: hidden;
+      }
+
+      .pv-mesh-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(at 80% 10%, rgba(235, 197, 38, 0.04) 0px, transparent 45%),
+          radial-gradient(at 10% 90%, rgba(113, 113, 174, 0.05) 0px, transparent 45%),
+          var(--color-bg-dark);
+        z-index: 0;
       }
 
       .subsection {
-        margin-bottom: var(--spacing-6xl);
-      }
-
-      .subsection h2 {
-        font-size: var(--font-size-3xl);
-        margin-bottom: var(--spacing-3xl);
-        text-align: center;
-        color: var(--color-text-light);
         position: relative;
-        padding-bottom: var(--spacing-2xl);
+        z-index: 2;
+        margin-bottom: var(--spacing-3xl);
       }
 
-      .subsection h2::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80px;
-        height: 4px;
-        background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
-        border-radius: 2px;
+      .subsection:last-child {
+        margin-bottom: 0;
+      }
+
+      .section-header {
+        margin-bottom: var(--spacing-2xl);
+      }
+
+      .section-eyebrow {
+        display: inline-block;
+        font-family: var(--font-display);
+        font-size: var(--font-size-xs);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--color-primary-light);
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .section-header h2 {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        color: var(--color-text-light);
+        letter-spacing: -0.02em;
+        margin-bottom: var(--spacing-md);
       }
 
       .policies-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: var(--spacing-2xl);
+        gap: var(--spacing-md);
       }
 
       .policy-item {
-        background: rgba(235, 197, 38, 0.05);
-        border-left: 4px solid var(--color-primary);
-        padding: var(--spacing-2xl);
-        border-radius: var(--border-radius-md);
-        transition: all 0.3s ease;
+        position: relative;
+        display: flex;
+        gap: var(--spacing-md);
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--color-primary-light);
+        padding: var(--spacing-lg) var(--spacing-xl);
+        border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+        transition: all var(--transition-slow);
+        overflow: hidden;
+      }
+
+      .policy-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        background: linear-gradient(90deg, rgba(235, 197, 38, 0.06), transparent);
+        transition: width var(--transition-slow);
+        z-index: 0;
       }
 
       .policy-item:hover {
-        background: rgba(235, 197, 38, 0.1);
-        transform: translateX(10px);
+        transform: translateX(8px);
+        border-left-color: var(--color-accent-purple);
       }
 
-      .policy-header h3 {
-        font-size: var(--font-size-lg);
-        color: var(--color-primary);
-        margin-bottom: var(--spacing-xl);
+      .policy-item:hover::before {
+        width: 100%;
       }
 
-      .policy-item p {
+      .policy-number {
+        font-family: var(--font-display);
+        font-size: var(--font-size-2xl);
+        font-weight: 700;
+        color: var(--color-primary-light);
+        opacity: 0.15;
+        line-height: 1;
+        flex-shrink: 0;
+        min-width: 40px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .policy-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .policy-content h3 {
+        font-family: var(--font-display);
+        font-size: var(--font-size-base);
+        color: var(--color-text-light);
+        margin-bottom: var(--spacing-sm);
+        letter-spacing: 0.02em;
+      }
+
+      .policy-content p {
         font-size: var(--font-size-sm);
         color: var(--color-text-secondary);
-        line-height: 1.8;
+        line-height: 1.7;
+        margin-bottom: 0;
       }
 
       .values-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: var(--spacing-2xl);
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: var(--spacing-md);
       }
 
       .value-item {
-        background: rgba(113, 113, 174, 0.05);
-        border: 1px solid rgba(113, 113, 174, 0.2);
+        position: relative;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         border-radius: var(--border-radius-lg);
-        padding: var(--spacing-2xl);
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
+        padding: 0;
+        overflow: hidden;
+        transition: all var(--transition-slow);
+      }
+
+      .value-item::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1.5px;
+        background: linear-gradient(
+          160deg,
+          rgba(113, 113, 174, 0.4),
+          rgba(235, 197, 38, 0.2),
+          transparent 60%
+        );
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity var(--transition-slow);
       }
 
       .value-item:hover {
-        border-color: rgba(113, 113, 174, 0.5);
-        transform: translateY(-10px);
-        box-shadow: 0 10px 30px rgba(113, 113, 174, 0.1);
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-purple-glow), 0 20px 40px rgba(0, 0, 0, 0.2);
+        border-color: rgba(113, 113, 174, 0.15);
       }
 
-      .value-header h3 {
+      .value-item:hover::before {
+        opacity: 0.7;
+      }
+
+      .value-content {
+        padding: var(--spacing-xl);
+        position: relative;
+        z-index: 1;
+      }
+
+      .value-content h3 {
+        font-family: var(--font-display);
         font-size: var(--font-size-lg);
-        color: rgba(113, 113, 174, 0.8);
-        margin-bottom: var(--spacing-xl);
+        color: rgba(113, 113, 174, 0.9);
+        margin-bottom: var(--spacing-md);
+        letter-spacing: -0.01em;
       }
 
-      .value-item p {
+      .value-content p {
         font-size: var(--font-size-sm);
         color: var(--color-text-secondary);
-        line-height: 1.8;
+        line-height: 1.7;
+        margin-bottom: 0;
+      }
+
+      .value-accent {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          var(--color-accent-purple),
+          var(--color-primary-light),
+          transparent
+        );
+        opacity: 0.3;
+        transition: opacity var(--transition-slow);
+      }
+
+      .value-item:hover .value-accent {
+        opacity: 0.8;
       }
 
       @media (max-width: 768px) {
@@ -148,25 +273,14 @@ interface Value {
           grid-template-columns: 1fr;
         }
 
-        .subsection h2 {
+        .policy-item {
+          flex-direction: column;
+          gap: var(--spacing-sm);
+        }
+
+        .policy-number {
           font-size: var(--font-size-2xl);
         }
-      }
-
-      /* Animaciones */
-      @keyframes fade-in-up {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .fade-in-up {
-        animation: fade-in-up 0.6s ease-out forwards;
       }
     `,
   ],
@@ -192,10 +306,6 @@ export class PoliciesValuesComponent {
     {
       title: 'Responsabilidad en las tareas',
       description: 'Cada miembro deberá cumplir de manera oportuna y eficiente con las tareas que le sean asignadas.',
-    },
-    {
-      title: 'Asistencia y puntualidad',
-      description: 'Todos los integrantes deberán asistir puntualmente a las reuniones programadas, salvo casos excepcionales debidamente justificados.',
     },
     {
       title: 'Comunicación con el cliente',

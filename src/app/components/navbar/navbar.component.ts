@@ -31,6 +31,7 @@ import { CommonModule } from '@angular/common';
           <li><a href="#vision-mission" (click)="closeMenu()">Visión y Misión</a></li>
           <li><a href="#policies-values" (click)="closeMenu()">Políticas y Valores</a></li>
           <li><a href="#objectives" (click)="closeMenu()">Objetivos</a></li>
+          <li><a href="#team" (click)="closeMenu()">Equipo</a></li>
           <li><a href="#contact" (click)="closeMenu()">Contacto</a></li>
         </ul>
 
@@ -48,17 +49,26 @@ import { CommonModule } from '@angular/common';
         top: 0;
         left: 0;
         right: 0;
-        background: rgba(19, 28, 56, 0.9);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(235, 197, 38, 0.1);
         z-index: 1000;
         transition: all var(--transition-base);
       }
 
-      .navbar.scrolled {
+      .navbar::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(19, 28, 56, 0.85);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid rgba(235, 197, 38, 0.08);
+        z-index: -1;
+        transition: all var(--transition-base);
+      }
+
+      .navbar.scrolled::before {
         background: rgba(19, 28, 56, 0.95);
         border-bottom-color: rgba(235, 197, 38, 0.2);
-        box-shadow: var(--shadow-md);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       }
 
       .navbar-container {
@@ -67,6 +77,7 @@ import { CommonModule } from '@angular/common';
         justify-content: space-between;
         padding: var(--spacing-sm) 0;
         min-height: 70px;
+        position: relative;
       }
 
       .navbar-logo {
@@ -75,18 +86,27 @@ import { CommonModule } from '@angular/common';
         gap: var(--spacing-sm);
       }
 
+      .logo-icon {
+        font-size: 1.5rem;
+        color: var(--color-primary-light);
+        line-height: 1;
+      }
+
       .logo-text {
+        font-family: var(--font-display);
         font-size: var(--font-size-2xl);
-        font-weight: 800;
+        font-weight: 700;
         background: linear-gradient(
           135deg,
-          var(--color-primary-light),
-          var(--color-primary-muted)
+          var(--color-primary-light) 0%,
+          var(--color-primary-muted) 50%,
+          var(--color-accent-purple) 100%
         );
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        letter-spacing: -0.02em;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
 
       .nav-links {
@@ -97,24 +117,34 @@ import { CommonModule } from '@angular/common';
       }
 
       .nav-links a {
-        font-weight: 500;
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: var(--font-size-sm);
         position: relative;
         color: var(--color-text-light);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: var(--spacing-xs) 0;
       }
 
       .nav-links a::after {
         content: '';
         position: absolute;
-        bottom: -5px;
+        bottom: -2px;
         left: 0;
         width: 0;
-        height: 2px;
+        height: 1.5px;
         background: linear-gradient(
           90deg,
           var(--color-primary-light),
-          var(--color-primary-muted)
+          var(--color-accent-purple)
         );
-        transition: width var(--transition-base);
+        transition: width var(--transition-slow);
+        border-radius: 1px;
+      }
+
+      .nav-links a:hover {
+        color: var(--color-primary-light);
       }
 
       .nav-links a:hover::after {
@@ -123,6 +153,11 @@ import { CommonModule } from '@angular/common';
 
       .navbar-cta {
         white-space: nowrap;
+        font-family: var(--font-display);
+        font-size: var(--font-size-sm);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: var(--spacing-sm) var(--spacing-lg);
       }
 
       .menu-toggle {

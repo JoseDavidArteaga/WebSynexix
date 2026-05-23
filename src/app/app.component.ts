@@ -5,6 +5,7 @@ import { HeroComponent } from './components/hero/hero.component';
 import { VisionMissionComponent } from './vision-mission.component';
 import { PoliciesValuesComponent } from './policies-values.component';
 import { ObjectivesComponent } from './objectives.component';
+import { TeamComponent } from './team.component';
 import { FooterComponent } from './footer.component';
 
 @Component({
@@ -17,6 +18,7 @@ import { FooterComponent } from './footer.component';
     VisionMissionComponent,
     PoliciesValuesComponent,
     ObjectivesComponent,
+    TeamComponent,
     FooterComponent,
   ],
   template: `
@@ -26,6 +28,7 @@ import { FooterComponent } from './footer.component';
       <app-vision-mission></app-vision-mission>
       <app-policies-values></app-policies-values>
       <app-objectives></app-objectives>
+      <app-team></app-team>
     </main>
     <app-footer></app-footer>
   `,
