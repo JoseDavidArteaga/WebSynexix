@@ -147,6 +147,7 @@ interface TeamMember {
         perspective: 1000px;
         opacity: 0;
         display: flex;
+        height: 100%;
         animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
       }
 
@@ -197,8 +198,7 @@ interface TeamMember {
       .team-image-wrapper {
         position: relative;
         width: 100%;
-        aspect-ratio: 1;
-        min-height: 180px;
+        height: 220px;
         border-radius: var(--border-radius-lg);
         overflow: hidden;
         margin-bottom: var(--spacing-md);
@@ -207,6 +207,9 @@ interface TeamMember {
       }
 
       .team-image {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -267,6 +270,7 @@ interface TeamMember {
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 100%;
+        display: block;
       }
 
       .team-role {
@@ -305,6 +309,10 @@ interface TeamMember {
         .team-grid {
           grid-template-columns: repeat(3, 1fr);
         }
+
+        .team-image-wrapper {
+          height: 240px;
+        }
       }
 
       @media (max-width: 1024px) {
@@ -322,6 +330,10 @@ interface TeamMember {
 
         .team-card-inner {
           padding: var(--spacing-md);
+        }
+
+        .team-image-wrapper {
+          height: 200px;
         }
       }
 
@@ -342,7 +354,7 @@ interface TeamMember {
         }
 
         .team-image-wrapper {
-          min-height: 150px;
+          height: 180px;
         }
 
         .team-name {
@@ -379,7 +391,7 @@ interface TeamMember {
 
         .team-image-wrapper {
           margin-bottom: var(--spacing-sm);
-          min-height: 130px;
+          height: 160px;
         }
       }
 
@@ -401,7 +413,7 @@ interface TeamMember {
         }
 
         .team-image-wrapper {
-          min-height: 220px;
+          height: 280px;
         }
 
         .team-name {
