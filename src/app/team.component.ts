@@ -309,14 +309,25 @@ interface TeamMember {
       @media (max-width: 1024px) {
         .team-section {
           min-height: auto;
-          padding: 100px 0 60px;
+          padding: 80px 0 50px;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .team-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: var(--spacing-md);
+        }
+
+        .team-card-inner {
+          padding: var(--spacing-md);
         }
       }
 
       @media (max-width: 768px) {
         .team-section {
           min-height: auto;
-          padding: 100px 0 60px;
+          padding: 70px 0 40px;
         }
 
         .team-grid {
@@ -328,20 +339,64 @@ interface TeamMember {
           padding: var(--spacing-md);
         }
 
-        .team-number {
-          font-size: 2rem;
+        .team-name {
+          font-size: var(--font-size-sm);
+        }
+
+        .team-role {
+          font-size: 0.65rem;
         }
 
         .section-title {
           margin-bottom: var(--spacing-lg);
         }
+
+        .section-title h2 {
+          font-size: clamp(1.4rem, 5vw, 1.8rem);
+        }
+
+        .section-title p {
+          font-size: var(--font-size-sm);
+        }
+      }
+
+      @media (max-width: 576px) {
+        .team-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: var(--spacing-sm);
+        }
+
+        .team-card-inner {
+          padding: var(--spacing-sm);
+        }
+
+        .team-image-wrapper {
+          margin-bottom: var(--spacing-sm);
+        }
       }
 
       @media (max-width: 480px) {
+        .team-section {
+          padding: 60px 0 30px;
+        }
+
         .team-grid {
           grid-template-columns: 1fr;
-          max-width: 280px;
+          max-width: 260px;
           margin: 0 auto;
+          gap: var(--spacing-lg);
+        }
+
+        .team-card-inner {
+          padding: var(--spacing-md);
+        }
+
+        .team-name {
+          font-size: var(--font-size-base);
+        }
+
+        .team-role {
+          font-size: var(--font-size-xs);
         }
       }
     `,

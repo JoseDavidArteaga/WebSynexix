@@ -233,7 +233,21 @@ interface Objective {
         margin-bottom: 0;
       }
 
+      @media (max-width: 992px) {
+        .objectives-timeline {
+          max-width: 100%;
+        }
+
+        .objective-content {
+          max-width: 100%;
+        }
+      }
+
       @media (max-width: 768px) {
+        .objectives-section {
+          padding: var(--spacing-4xl) 0;
+        }
+
         .objectives-timeline {
           padding-left: var(--spacing-xl);
         }
@@ -251,6 +265,7 @@ interface Objective {
           padding-right: 0;
           text-align: left;
           justify-content: flex-start;
+          margin-bottom: var(--spacing-2xl);
         }
 
         .objective-left .objective-header,
@@ -261,10 +276,69 @@ interface Objective {
         .objective-dot {
           left: calc(-1 * var(--spacing-3xl) + 12px) !important;
           right: auto !important;
+          top: var(--spacing-lg);
         }
 
         .objective-content {
           max-width: 100%;
+          padding: var(--spacing-lg);
+        }
+
+        .objective-content h3 {
+          font-size: var(--font-size-base);
+        }
+
+        .objective-number {
+          font-size: 1.5rem;
+        }
+
+        .objective-icon {
+          width: 40px;
+          height: 40px;
+        }
+
+        .objective-icon span {
+          font-size: 18px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .objectives-section {
+          padding: var(--spacing-3xl) 0;
+        }
+
+        .objectives-timeline {
+          padding-left: var(--spacing-lg);
+        }
+
+        .timeline-connector {
+          left: 16px;
+        }
+
+        .objective-item {
+          padding-left: var(--spacing-2xl);
+        }
+
+        .objective-dot {
+          left: calc(-1 * var(--spacing-2xl) + 9px) !important;
+          width: 12px;
+          height: 12px;
+        }
+
+        .objective-content {
+          padding: var(--spacing-md);
+        }
+
+        .objective-content h3 {
+          font-size: var(--font-size-sm);
+        }
+
+        .objective-content p {
+          font-size: var(--font-size-xs);
+        }
+
+        .objective-header {
+          margin-bottom: var(--spacing-sm);
         }
       }
     `,

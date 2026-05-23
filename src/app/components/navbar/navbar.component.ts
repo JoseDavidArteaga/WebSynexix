@@ -190,6 +190,21 @@ import { CommonModule } from '@angular/common';
         transform: rotate(-45deg) translate(7px, -7px);
       }
 
+      @media (max-width: 992px) {
+        .nav-links {
+          gap: var(--spacing-lg);
+        }
+
+        .nav-links a {
+          font-size: var(--font-size-xs);
+        }
+
+        .navbar-cta {
+          padding: var(--spacing-xs) var(--spacing-md);
+          font-size: var(--font-size-xs);
+        }
+      }
+
       @media (max-width: 768px) {
         .menu-toggle {
           display: flex;
@@ -211,11 +226,43 @@ import { CommonModule } from '@angular/common';
         }
 
         .nav-links.active {
-          max-height: 400px;
+          max-height: 500px;
+          padding: var(--spacing-xl) var(--spacing-lg);
+        }
+
+        .nav-links a {
+          font-size: var(--font-size-sm);
+          width: 100%;
+          text-align: center;
+          padding: var(--spacing-sm) 0;
         }
 
         .navbar-cta {
           display: none;
+        }
+
+        .navbar-container {
+          padding: var(--spacing-xs) 0;
+          min-height: 60px;
+        }
+
+        .logo-text {
+          font-size: var(--font-size-xl);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .nav-links.active {
+          padding: var(--spacing-lg);
+        }
+
+        .nav-links a {
+          font-size: var(--font-size-sm);
+        }
+
+        .menu-toggle span {
+          width: 22px;
+          height: 2.5px;
         }
       }
     `,

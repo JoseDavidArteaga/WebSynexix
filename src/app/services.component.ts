@@ -137,9 +137,56 @@ interface Service {
         align-self: flex-start;
       }
 
+      @media (max-width: 992px) {
+        .grid-3 {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .service-card {
+          padding: var(--spacing-xl);
+        }
+
+        .service-icon {
+          width: 48px;
+          height: 48px;
+        }
+      }
+
       @media (max-width: 768px) {
         .grid-3 {
           grid-template-columns: 1fr;
+        }
+
+        .service-card {
+          padding: var(--spacing-lg);
+        }
+
+        .service-card h3 {
+          font-size: var(--font-size-base);
+        }
+
+        .service-card p {
+          font-size: var(--font-size-sm);
+        }
+
+        .service-features li {
+          font-size: var(--font-size-sm);
+        }
+
+        .btn-sm {
+          align-self: flex-start;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .service-card {
+          padding: var(--spacing-md);
+        }
+
+        .service-icon {
+          width: 40px;
+          height: 40px;
+          margin-bottom: var(--spacing-md);
         }
       }
     `,

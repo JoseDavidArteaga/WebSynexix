@@ -29,29 +29,49 @@ import { CommonModule } from '@angular/common';
                   title="LinkedIn"
                   target="_blank"
                   rel="noopener"
-                  [innerHTML]="getLinkedInIcon()"
-                ></a>
+                  class="social-link"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                    <rect x="2" y="9" width="4" height="12"/>
+                    <circle cx="4" cy="4" r="2"/>
+                  </svg>
+                </a>
                 <a
-                  href="https://twitter.com"
-                  title="Twitter"
+                  href="https://x.com"
+                  title="X (Twitter)"
                   target="_blank"
                   rel="noopener"
-                  [innerHTML]="getTwitterIcon()"
-                ></a>
+                  class="social-link"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </a>
                 <a
-                  href="https://github.com"
-                  title="GitHub"
+                  href="https://instagram.com"
+                  title="Instagram"
                   target="_blank"
                   rel="noopener"
-                  [innerHTML]="getGitHubIcon()"
-                ></a>
+                  class="social-link"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                  </svg>
+                </a>
                 <a
                   href="https://facebook.com"
                   title="Facebook"
                   target="_blank"
                   rel="noopener"
-                  [innerHTML]="getFacebookIcon()"
-                ></a>
+                  class="social-link"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                  </svg>
+                </a>
               </div>
             </div>
 
@@ -216,52 +236,56 @@ import { CommonModule } from '@angular/common';
       .social-links {
         display: flex;
         gap: var(--spacing-md);
+        align-items: center;
       }
 
-      .social-links a {
+      .social-link {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 42px;
-        height: 42px;
-        background: rgba(235, 197, 38, 0.05);
-        border: 1px solid rgba(235, 197, 38, 0.15);
+        width: 44px;
+        height: 44px;
+        background: rgba(235, 197, 38, 0.08);
+        border: 1.5px solid var(--color-primary-light);
         border-radius: 50%;
         color: var(--color-primary-light);
         transition: all var(--transition-base);
         position: relative;
         overflow: hidden;
+        flex-shrink: 0;
       }
 
-      .social-links a::before {
+      .social-link::before {
         content: '';
         position: absolute;
         inset: 0;
         background: var(--color-primary-light);
         transform: scale(0);
         border-radius: 50%;
-        transition: transform var(--transition-bounce);
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
-      .social-links a:hover {
+      .social-link:hover {
         border-color: var(--color-primary-light);
         transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(235, 197, 38, 0.3);
       }
 
-      .social-links a:hover::before {
+      .social-link:hover::before {
         transform: scale(1);
       }
 
-      .social-links a:hover svg {
-        color: var(--color-bg-dark);
+      .social-link svg {
+        width: 20px;
+        height: 20px;
         position: relative;
         z-index: 1;
+        transition: color var(--transition-base);
+        flex-shrink: 0;
       }
 
-      .social-links svg {
-        width: 18px;
-        height: 18px;
-        transition: color var(--transition-base);
+      .social-link:hover svg {
+        color: var(--color-bg-dark);
       }
 
       .footer-column {
@@ -414,56 +438,113 @@ import { CommonModule } from '@angular/common';
           grid-template-columns: repeat(2, 1fr);
           gap: var(--spacing-3xl);
         }
+
+        .footer-content {
+          padding: var(--spacing-4xl) 0 var(--spacing-2xl);
+        }
       }
 
       @media (max-width: 768px) {
         .footer-grid {
           grid-template-columns: 1fr;
-          gap: var(--spacing-3xl);
+          gap: var(--spacing-2xl);
+        }
+
+        .footer-content {
+          padding: var(--spacing-3xl) 0 var(--spacing-xl);
+        }
+
+        .footer-brand {
+          text-align: center;
+        }
+
+        .footer-logo {
+          justify-content: center;
+        }
+
+        .footer-description {
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .social-links {
+          justify-content: center;
+        }
+
+        .footer-column h4 {
+          text-align: center;
+        }
+
+        .footer-column h4::after {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        .footer-column ul {
+          text-align: center;
+        }
+
+        .contact-info p {
+          align-items: center;
+          text-align: center;
         }
 
         .footer-bottom-content {
           flex-direction: column;
           text-align: center;
+          gap: var(--spacing-md);
         }
 
         .footer-links {
           justify-content: center;
+          flex-wrap: wrap;
+          gap: var(--spacing-md);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .footer-content {
+          padding: var(--spacing-2xl) 0 var(--spacing-lg);
+        }
+
+        .footer-grid {
+          gap: var(--spacing-xl);
+        }
+
+        .footer-logo .logo-text {
+          font-size: var(--font-size-xl);
+        }
+
+        .footer-description {
+          font-size: var(--font-size-xs);
+        }
+
+        .footer-column h4 {
+          font-size: var(--font-size-xs);
+          margin-bottom: var(--spacing-lg);
+        }
+
+        .footer-column ul a {
+          font-size: var(--font-size-xs);
+        }
+
+        .contact-info p {
+          font-size: var(--font-size-xs);
+        }
+
+        .footer-bottom {
+          padding: var(--spacing-md) 0;
+        }
+
+        .copyright {
+          font-size: 0.7rem;
+        }
+
+        .footer-links a {
+          font-size: 0.7rem;
         }
       }
     `,
   ],
 })
-export class FooterComponent {
-  getLinkedInIcon(): string {
-    return `
-      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.731-2.004 1.43-.103.25-.129.599-.129.948v5.427h-3.553s.047-8.789 0-9.701h3.553v1.374c.42-.653 1.173-1.583 2.851-1.583 2.084 0 3.644 1.362 3.644 4.292l-.001 5.618zM5.337 8.855c-1.144 0-1.915-.761-1.915-1.715 0-.956.77-1.715 1.958-1.715 1.187 0 1.914.759 1.938 1.715 0 .954-.751 1.715-1.981 1.715zm1.946 11.597H3.392v-9.701h3.891v9.701zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
-      </svg>
-    `;
-  }
-
-  getTwitterIcon(): string {
-    return `
-      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417a9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-      </svg>
-    `;
-  }
-
-  getGitHubIcon(): string {
-    return `
-      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-      </svg>
-    `;
-  }
-
-  getFacebookIcon(): string {
-    return `
-      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-      </svg>
-    `;
-  }
-}
+export class FooterComponent {}

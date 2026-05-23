@@ -201,20 +201,77 @@ import { CommonModule } from '@angular/common';
         color: var(--color-text-secondary);
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 992px) {
         .vm-grid {
-          grid-template-columns: 1fr;
           gap: var(--spacing-2xl);
         }
 
         .card-content {
-          padding: var(--spacing-3xl);
+          padding: var(--spacing-2xl);
+        }
+
+        .card-icon {
+          width: 50px;
+          height: 50px;
+        }
+
+        .card-icon svg {
+          width: 26px;
+          height: 26px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .vm-grid {
+          grid-template-columns: 1fr;
+          gap: var(--spacing-xl);
+        }
+
+        .card-content {
+          padding: var(--spacing-2xl);
         }
 
         .card-number {
-          font-size: 3rem;
+          font-size: 2.5rem;
           top: var(--spacing-lg);
           right: var(--spacing-lg);
+        }
+
+        .card-icon {
+          width: 48px;
+          height: 48px;
+          margin-bottom: var(--spacing-md);
+        }
+
+        .vision-card h3,
+        .mission-card h3 {
+          font-size: var(--font-size-lg);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .vision-mission-section {
+          padding: var(--spacing-3xl) 0;
+        }
+
+        .card-content {
+          padding: var(--spacing-xl);
+        }
+
+        .card-number {
+          font-size: 2rem;
+          top: var(--spacing-md);
+          right: var(--spacing-md);
+        }
+
+        .vision-card h3,
+        .mission-card h3 {
+          font-size: var(--font-size-base);
+        }
+
+        .vision-card p,
+        .mission-card p {
+          font-size: var(--font-size-sm);
         }
       }
     `,

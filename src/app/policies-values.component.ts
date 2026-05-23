@@ -267,19 +267,74 @@ interface Value {
         opacity: 0.8;
       }
 
+      @media (max-width: 992px) {
+        .policies-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .values-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .policy-item {
+          padding: var(--spacing-md) var(--spacing-lg);
+        }
+      }
+
       @media (max-width: 768px) {
         .policies-grid,
         .values-grid {
           grid-template-columns: 1fr;
+          gap: var(--spacing-md);
         }
 
         .policy-item {
           flex-direction: column;
           gap: var(--spacing-sm);
+          padding: var(--spacing-md) var(--spacing-lg);
         }
 
         .policy-number {
-          font-size: var(--font-size-2xl);
+          font-size: var(--font-size-xl);
+        }
+
+        .section-header h2 {
+          font-size: clamp(1.5rem, 5vw, 2rem);
+        }
+
+        .value-content {
+          padding: var(--spacing-lg);
+        }
+
+        .subsection {
+          margin-bottom: var(--spacing-2xl);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .policies-values-section {
+          padding: var(--spacing-3xl) 0;
+        }
+
+        .policy-item {
+          padding: var(--spacing-md);
+        }
+
+        .policy-content h3 {
+          font-size: var(--font-size-sm);
+        }
+
+        .value-content h3 {
+          font-size: var(--font-size-base);
+        }
+
+        .policy-content p,
+        .value-content p {
+          font-size: var(--font-size-xs);
+        }
+
+        .section-header h2 {
+          font-size: 1.4rem;
         }
       }
     `,
